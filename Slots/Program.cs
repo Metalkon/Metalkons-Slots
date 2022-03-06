@@ -9,10 +9,7 @@ namespace Slot_Machine
     {
         static void Main()
         {
-            int num1 = 0; int num2 = 0; int num3 = 0;
-            int num4 = 0; int num5 = 0; int num6 = 0;
-            int num7 = 0; int num8 = 0; int num9 = 0;
-            ConsoleHelper.SetCurrentFont("Consolas", 18); Console.Clear();
+            ConsoleHelper.SetCurrentFont("Consolas", 20); Console.Clear();
             SoundPlayer jackpot = new SoundPlayer(@"Music\Jackpot.wav");
             SoundPlayer kaching = new SoundPlayer(@"Music\Kaching.wav");
             SoundPlayer music = new SoundPlayer(@"Music\Music.wav");
@@ -41,23 +38,20 @@ namespace Slot_Machine
             {
                 Console.WriteLine("Enter ONLY numbers PLEASE!");
                 Console.Write($"\nInsert Bid (${userResponse} Limit): ");
-                userResponse = Console.ReadLine();
-                Console.Clear();
-
+                userResponse2 = Console.ReadLine();
             }
-            if (Convert.ToInt32(userResponse2) > Convert.ToInt32(userResponse))
+            if (Convert.ToInt32(userResponse2) > Convert.ToInt32(userResponse2))
             {
                 Console.WriteLine("That's too much!");
                 Console.Write($"\nInsert Bid (${userResponse} Limit): ");
-                userResponse = Console.ReadLine();
-                Console.Clear();
+                userResponse2 = Console.ReadLine();
             }
 
             int cash = Convert.ToInt32(userResponse);
             int bid = Convert.ToInt32(userResponse2);
             Title();
-            Console.WriteLine($"\t  [ {num1} ] - [ {num2} ] - [ {num3} ]\n\t  [ {num4} ] - [ {num5} ] - [ {num6} ]\n\t  [ {num7} ] - [ {num8} ] - [ {num9} ]");
-            string response = null;
+            Console.WriteLine($"\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]");
+            string response;
             Random RandomNumber = new Random();
             for (; ; )
             {
@@ -68,7 +62,7 @@ namespace Slot_Machine
                     break;
                 }
                 Console.WriteLine($"\nCash Remaining = ${cash} (Current Bid ${bid})");
-                Console.Write("Would you like to spin again? (press enter)");
+                Console.Write("Would you like to spin? (press enter)");
                 response = Console.ReadLine();
                 if (response == "n")
                 {
@@ -77,36 +71,36 @@ namespace Slot_Machine
                 else
                 {
                     cash = cash - bid;
-                    num1 = RandomNumber.Next(1, 8); num2 = RandomNumber.Next(1, 8); num3 = RandomNumber.Next(1, 8);
-                    num4 = RandomNumber.Next(1, 8); num5 = RandomNumber.Next(1, 8); num6 = RandomNumber.Next(1, 8);
-                    num7 = RandomNumber.Next(1, 8); num8 = RandomNumber.Next(1, 8); num9 = RandomNumber.Next(1, 8);
-
-                    Console.Clear();
+                    int[] num = new int[9];
+                    num[0] = RandomNumber.Next(1, 8); num[1] = RandomNumber.Next(1, 8); num[2] = RandomNumber.Next(1, 8);
+                    num[3] = RandomNumber.Next(1, 8); num[4] = RandomNumber.Next(1, 8); num[5] = RandomNumber.Next(1, 8);
+                    num[6] = RandomNumber.Next(1, 8); num[7] = RandomNumber.Next(1, 8); num[8] = RandomNumber.Next(1, 8);
+                  
                     Title();
-                    Console.WriteLine($"\t  [ {GetCharacter(num1)} ] - [ {GetCharacter(num2)} ] - [ {GetCharacter(num3)} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
-                    Console.WriteLine($"\t  [ {GetCharacter(num4)} ] - [ {GetCharacter(num5)} ] - [ {GetCharacter(num6)} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
-                    Console.WriteLine($"\t  [ {GetCharacter(num7)} ] - [ {GetCharacter(num8)} ] - [ {GetCharacter(num9)} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[6])} ] - [ {GetCharacter(num[7])} ] - [ {GetCharacter(num[8])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
 
                     // Note: Replace if with switch
-                    if ((num1 == num2 && num2 == num3 && (num1 != 8)) || (num4 == num5 && num5 == num6 && (num4 != 8)) || (num7 == num8 && num8 == num9 && (num7 != 8)) || (num1 == num5 && num5 == num9 && (num7 != 8)) || (num3 == num5 && num5 == num7 && (num7 != 8)))
+                    if ((num[0] == num[1] && num[1] == num[2] && (num[0] != 8)) || (num[3] == num[4] && num[4] == num[5] && (num[3] != 8)) || (num[6] == num[7] && num[7] == num[8] && (num[6] != 8)) || (num[0] == num[4] && num[4] == num[8] && (num[6] != 8)) || (num[2] == num[4] && num[4] == num[6] && (num[6] != 8)))
                     {
                         cash += 5 * bid;
-                        Console.WriteLine($"\n\t  Congratulations, you've won ${5 * bid}!");
+                        Console.WriteLine($"\nCongratulations, you've won ${5 * bid}!");
                         music.Stop();
                         kaching.PlaySync();
                         music.PlayLooping();
                     }
-                    else if ((num1 == num2 && num2 == num3 && (num1 >= 8)) || (num4 == num5 && num5 == num6 && (num4 >= 8)) || (num7 == num8 && num8 == num9 && (num7 >= 8)) || (num1 == num5 && num5 == num9 && (num7 >= 8)) || (num3 == num5 && num5 == num7 && (num7 >= 8)))
+                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) || (num[3] == num[4] && num[4] == num[5] && (num[3] == 8)) || (num[6] == num[7] && num[7] == num[8] && (num[6] == 8)) || (num[0] == num[4] && num[4] == num[8] && (num[6] == 8)) || (num[2] == num[4] && num[4] == num[6] && (num[6] == 8)))
                     {
                         cash += 75 * bid;
-                        Console.WriteLine($"\n\t  JACKPOT LUCKY 7's, you've won {75 * bid}!");
+                        Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
                         music.Stop();
                         jackpot.PlaySync();
                         music.PlayLooping();
                     }
                     else
                     {
-                        Console.WriteLine("\n\t  Better luck next time!");
+                        Console.WriteLine("\nBetter luck next time!");
                     }
                 }
             }
