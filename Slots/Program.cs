@@ -74,7 +74,7 @@ namespace Slot_Machine
                 }
                 Console.WriteLine($"\nCash Remaining = ${cash} (Current Bid ${bid})");
                 Console.Write("Would you like to spin? (press enter)");
-                response = Console.ReadLine();
+                response = Console.ReadLine(); System.Threading.Thread.Sleep(100);
                 if (response == "n")
                 {
                     break;
