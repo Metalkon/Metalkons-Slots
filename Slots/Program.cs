@@ -92,13 +92,13 @@ namespace Slot_Machine
 
 
                     if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) // SEVENS JACKPOT
-                         || (num[3] == num[4] && num[4] == num[5] && (num[3] == 8))
-                         || (num[6] == num[7] && num[7] == num[8] && (num[6] == 8))
-                         || (num[0] == num[4] && num[4] == num[8] && (num[6] == 8))
-                         || (num[2] == num[4] && num[4] == num[6] && (num[6] == 8))
-                         || (num[0] == num[3] && num[3] == num[6] && (num[0] == 8))
-                         || (num[1] == num[4] && num[4] == num[7] && (num[1] == 8))
-                         || (num[2] == num[5] && num[5] == num[8] && (num[2] == 8)))
+                         || (num[3] == num[4] && num[4] == num[5] && (num[3] >= 8))
+                         || (num[6] == num[7] && num[7] == num[8] && (num[6] >= 8))
+                         || (num[0] == num[4] && num[4] == num[8] && (num[6] >= 8))
+                         || (num[2] == num[4] && num[4] == num[6] && (num[6] >= 8))
+                         || (num[0] == num[3] && num[3] == num[6] && (num[0] >= 8))
+                         || (num[1] == num[4] && num[4] == num[7] && (num[1] >= 8))
+                         || (num[2] == num[5] && num[5] == num[8] && (num[2] >= 8)))
                     {
                         cash += 75 * bid;
                         Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
