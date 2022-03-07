@@ -7,6 +7,13 @@ namespace Slot_Machine
     class Program
 
     {
+        public static void Title()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║  Metalkon's Shitty Slot Machine Game!  ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
         static void Main()
         {
             ConsoleHelper.SetCurrentFont("Consolas", 20); Console.Clear();
@@ -46,7 +53,7 @@ namespace Slot_Machine
                 Console.Write($"\nInsert Bid (${userResponse} Limit): ");
                 userResponse2 = Console.ReadLine();
             }
-
+            // finish start while/if statements by using the cash and bid
             int cash = Convert.ToInt32(userResponse);
             int bid = Convert.ToInt32(userResponse2);
             Title();
@@ -75,7 +82,6 @@ namespace Slot_Machine
                     num[0] = RandomNumber.Next(1, 8); num[1] = RandomNumber.Next(1, 8); num[2] = RandomNumber.Next(1, 8);
                     num[3] = RandomNumber.Next(1, 8); num[4] = RandomNumber.Next(1, 8); num[5] = RandomNumber.Next(1, 8);
                     num[6] = RandomNumber.Next(1, 8); num[7] = RandomNumber.Next(1, 8); num[8] = RandomNumber.Next(1, 8);
-                  
                     Title();
                     Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
                     Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
@@ -86,17 +92,13 @@ namespace Slot_Machine
                     {
                         cash += 5 * bid;
                         Console.WriteLine($"\nCongratulations, you've won ${5 * bid}!");
-                        music.Stop();
-                        kaching.PlaySync();
-                        music.PlayLooping();
+                        music.Stop(); kaching.PlaySync(); music.PlayLooping();
                     }
                     else if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) || (num[3] == num[4] && num[4] == num[5] && (num[3] == 8)) || (num[6] == num[7] && num[7] == num[8] && (num[6] == 8)) || (num[0] == num[4] && num[4] == num[8] && (num[6] == 8)) || (num[2] == num[4] && num[4] == num[6] && (num[6] == 8)))
                     {
                         cash += 75 * bid;
                         Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
-                        music.Stop();
-                        jackpot.PlaySync();
-                        music.PlayLooping();
+                        music.Stop(); jackpot.PlaySync(); music.PlayLooping();
                     }
                     else
                     {
@@ -120,12 +122,11 @@ namespace Slot_Machine
                 default: return '\0';
             }
         }
-        public static void Title()
+
+        public static void Music()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║  Metalkon's Shitty Slot Machine Game!  ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+
         }
+
     }
 }
