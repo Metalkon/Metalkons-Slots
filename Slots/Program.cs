@@ -53,13 +53,16 @@ namespace Slot_Machine
                 Console.Write($"\nInsert Bid (${userResponse} Limit): ");
                 userResponse2 = Console.ReadLine();
             }
-            // finish start while/if statements by using the cash and bid
+
+            // note: gotta figure out how to fix the stuff above.
             int cash = Convert.ToInt32(userResponse);
             int bid = Convert.ToInt32(userResponse2);
+
             Title();
             Console.WriteLine($"\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]");
             string response;
             Random RandomNumber = new Random();
+
             for (; ; )
             {
                 if (Convert.ToInt32(cash) < bid)
@@ -83,22 +86,50 @@ namespace Slot_Machine
                     num[3] = RandomNumber.Next(1, 8); num[4] = RandomNumber.Next(1, 8); num[5] = RandomNumber.Next(1, 8);
                     num[6] = RandomNumber.Next(1, 8); num[7] = RandomNumber.Next(1, 8); num[8] = RandomNumber.Next(1, 8);
                     Title();
-                    Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
-                    Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
-                    Console.WriteLine($"\t  [ {GetCharacter(num[6])} ] - [ {GetCharacter(num[7])} ] - [ {GetCharacter(num[8])} ]"); Console.Beep(); System.Threading.Thread.Sleep(350);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
+                    Console.WriteLine($"\t  [ {GetCharacter(num[6])} ] - [ {GetCharacter(num[7])} ] - [ {GetCharacter(num[8])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
 
-                    // Note: Replace if with switch
-                    if ((num[0] == num[1] && num[1] == num[2] && (num[0] != 8)) || (num[3] == num[4] && num[4] == num[5] && (num[3] != 8)) || (num[6] == num[7] && num[7] == num[8] && (num[6] != 8)) || (num[0] == num[4] && num[4] == num[8] && (num[6] != 8)) || (num[2] == num[4] && num[4] == num[6] && (num[6] != 8)))
+
+                    if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) // SEVENS JACKPOT
+                         || (num[3] == num[4] && num[4] == num[5] && (num[3] == 8))
+                         || (num[6] == num[7] && num[7] == num[8] && (num[6] == 8))
+                         || (num[0] == num[4] && num[4] == num[8] && (num[6] == 8))
+                         || (num[2] == num[4] && num[4] == num[6] && (num[6] == 8))
+                         || (num[0] == num[3] && num[3] == num[6] && (num[0] == 8))
+                         || (num[1] == num[4] && num[4] == num[7] && (num[1] == 8))
+                         || (num[2] == num[5] && num[5] == num[8] && (num[2] == 8)))
+                    {
+                        cash += 75 * bid;
+                        Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
+                        music.Stop(); jackpot.PlaySync(); music.PlayLooping();
+                    }
+
+                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0] >= 4 && num[0] != 8)) // SPADES/CLUBS/HEARTS/DIAMONDS
+                        || (num[3] == num[4] && num[4] == num[5] && (num[3] >= 4 && num[3] != 8))
+                        || (num[6] == num[7] && num[7] == num[8] && (num[6] >= 4 && num[6] != 8))
+                        || (num[0] == num[4] && num[4] == num[8] && (num[0] >= 4 && num[0] != 8))
+                        || (num[2] == num[4] && num[4] == num[6] && (num[2] >= 4 && num[2] != 8))
+                        || (num[0] == num[3] && num[3] == num[6] && (num[0] >= 4 && num[0] != 8))
+                        || (num[1] == num[4] && num[4] == num[7] && (num[1] >= 4 && num[1] != 8))
+                        || (num[2] == num[5] && num[5] == num[8] && (num[2] >= 4 && num[2] != 8)))
                     {
                         cash += 5 * bid;
                         Console.WriteLine($"\nCongratulations, you've won ${5 * bid}!");
                         music.Stop(); kaching.PlaySync(); music.PlayLooping();
                     }
-                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) || (num[3] == num[4] && num[4] == num[5] && (num[3] == 8)) || (num[6] == num[7] && num[7] == num[8] && (num[6] == 8)) || (num[0] == num[4] && num[4] == num[8] && (num[6] == 8)) || (num[2] == num[4] && num[4] == num[6] && (num[6] == 8)))
+                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0]< 4)) // NUMBERS 1-3
+                        || (num[3] == num[4] && num[4] == num[5] && (num[3] < 4))
+                        || (num[6] == num[7] && num[7] == num[8] && (num[6] < 4))
+                        || (num[0] == num[4] && num[4] == num[8] && (num[0] < 4))
+                        || (num[2] == num[4] && num[4] == num[6] && (num[2] < 4))
+                        || (num[0] == num[3] && num[3] == num[6] && (num[0] < 4))
+                        || (num[1] == num[4] && num[4] == num[7] && (num[1] < 4))
+                        || (num[2] == num[5] && num[5] == num[8] && (num[2] < 4)))
                     {
-                        cash += 75 * bid;
-                        Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
-                        music.Stop(); jackpot.PlaySync(); music.PlayLooping();
+                        cash += 3 * bid;
+                        Console.WriteLine($"\nCongratulations, you've won ${3 * bid}!");
+                        music.Stop(); kaching.PlaySync(); music.PlayLooping();
                     }
                     else
                     {
@@ -121,11 +152,6 @@ namespace Slot_Machine
                 case 8: return '7';
                 default: return '\0';
             }
-        }
-
-        public static void Music()
-        {
-
         }
 
     }
