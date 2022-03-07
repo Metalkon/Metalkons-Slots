@@ -82,9 +82,9 @@ namespace Slot_Machine
                 {
                     cash = cash - bid;
                     int[] num = new int[9];
-                    num[0] = RandomNumber.Next(1, 8); num[1] = RandomNumber.Next(1, 8); num[2] = RandomNumber.Next(1, 8);
-                    num[3] = RandomNumber.Next(1, 8); num[4] = RandomNumber.Next(1, 8); num[5] = RandomNumber.Next(1, 8);
-                    num[6] = RandomNumber.Next(1, 8); num[7] = RandomNumber.Next(1, 8); num[8] = RandomNumber.Next(1, 8);
+                    num[0] = RandomNumber.Next(1, 9); num[1] = RandomNumber.Next(1, 9); num[2] = RandomNumber.Next(1, 9);
+                    num[3] = RandomNumber.Next(1, 9); num[4] = RandomNumber.Next(1, 9); num[5] = RandomNumber.Next(1, 9);
+                    num[6] = RandomNumber.Next(1, 9); num[7] = RandomNumber.Next(1, 9); num[8] = RandomNumber.Next(1, 9);
                     Title();
                     Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
                     Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
