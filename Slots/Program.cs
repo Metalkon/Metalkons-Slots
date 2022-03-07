@@ -39,6 +39,7 @@ namespace Slot_Machine
                 Console.Write("Insert Starting Amount ($1000 Limit): ");
                 userResponse = Console.ReadLine();
             }
+
             Console.Write($"Insert Bid (${userResponse} Limit): ");
             string userResponse2 = (Console.ReadLine());
             while (!Int32.TryParse(userResponse2, out _) || Convert.ToInt32(userResponse2) < 0)
@@ -85,11 +86,11 @@ namespace Slot_Machine
                     num[0] = RandomNumber.Next(1, 9); num[1] = RandomNumber.Next(1, 9); num[2] = RandomNumber.Next(1, 9);
                     num[3] = RandomNumber.Next(1, 9); num[4] = RandomNumber.Next(1, 9); num[5] = RandomNumber.Next(1, 9);
                     num[6] = RandomNumber.Next(1, 9); num[7] = RandomNumber.Next(1, 9); num[8] = RandomNumber.Next(1, 9);
+
                     Title();
                     Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
                     Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
                     Console.WriteLine($"\t  [ {GetCharacter(num[6])} ] - [ {GetCharacter(num[7])} ] - [ {GetCharacter(num[8])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
-
 
                     if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) // SEVENS JACKPOT
                          || (num[3] == num[4] && num[4] == num[5] && (num[3] >= 8))
@@ -153,6 +154,5 @@ namespace Slot_Machine
                 default: return '\0';
             }
         }
-
     }
 }

@@ -113,15 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Music\Jackpot.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Music\Kaching.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Music\Music.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
