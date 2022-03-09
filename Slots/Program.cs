@@ -4,17 +4,11 @@ using System.Media;
 
 namespace Slot_Machine
 {
+
     class Program
 
     {
-        public static void Title()
-        {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║  Metalkon's Shitty Slot Machine Game!  ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
-        }
-        static void Main()
+        public static void Main()
         {
             ConsoleHelper.SetCurrentFont("Consolas", 20); Console.Clear();
             SoundPlayer jackpot = new SoundPlayer(@"Music\Jackpot.wav");
@@ -24,40 +18,40 @@ namespace Slot_Machine
 
             Title();
             Console.WriteLine("How much virtual cash would you like to start the game with?");
-            Console.Write("Insert Starting Amount ($1000 Limit): ");
-            string userResponse = (Console.ReadLine());
-            while (!Int32.TryParse(userResponse, out _) || Convert.ToInt32(userResponse) < 0)
+
+            string theInputVariable = string.Empty;
+            string userResponseCash = UserCash();
+            while (!Int32.TryParse(theInputVariable, out _) || Convert.ToInt32(theInputVariable) < 0)
             {
                 Console.WriteLine("Enter ONLY numbers PLEASE!");
-                Console.Write("Insert Starting Amount ($1000 Limit): ");
-                userResponse = Console.ReadLine();
-
+                UserCash();
             }
-            if (Convert.ToInt32(userResponse) > 1000)
+            if (Convert.ToInt32(userResponseCash) > 1000)
             {
                 Console.WriteLine("That's too much!");
-                Console.Write("Insert Starting Amount ($1000 Limit): ");
-                userResponse = Console.ReadLine();
+                UserCash();
             }
-
-            Console.Write($"Insert Bid (${userResponse} Limit): ");
-            string userResponse2 = (Console.ReadLine());
-            while (!Int32.TryParse(userResponse2, out _) || Convert.ToInt32(userResponse2) < 0)
+            // INPUT STARTING BID
+            Console.Write($"Insert Bid (${userResponseCash} Limit): ");
+            string userResponseBid = UserBid(userResponseCash);
+            while (!Int32.TryParse(userResponseBid, out _) || Convert.ToInt32(userResponseBid) < 0)
             {
                 Console.WriteLine("Enter ONLY numbers PLEASE!");
-                Console.Write($"\nInsert Bid (${userResponse} Limit): ");
-                userResponse2 = Console.ReadLine();
+                UserBid(userResponseCash);
             }
-            if (Convert.ToInt32(userResponse2) > Convert.ToInt32(userResponse2))
+            if (Convert.ToInt32(userResponseBid) > Convert.ToInt32(userResponseBid))
             {
                 Console.WriteLine("That's too much!");
-                Console.Write($"\nInsert Bid (${userResponse} Limit): ");
-                userResponse2 = Console.ReadLine();
+                UserBid(userResponseCash);
             }
+
+
+
+
 
             // note: gotta figure out how to fix the stuff above.
-            int cash = Convert.ToInt32(userResponse);
-            int bid = Convert.ToInt32(userResponse2);
+            int cash = Convert.ToInt32(userResponseCash);
+            int bid = Convert.ToInt32(userResponseBid);
 
             Title();
             Console.WriteLine($"\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]");
@@ -81,7 +75,7 @@ namespace Slot_Machine
                 }
                 else
                 {
-                    cash = cash - bid;
+                    cash -= bid;
                     int[] num = new int[9];
                     num[0] = RandomNumber.Next(1, 9); num[1] = RandomNumber.Next(1, 9); num[2] = RandomNumber.Next(1, 9);
                     num[3] = RandomNumber.Next(1, 9); num[4] = RandomNumber.Next(1, 9); num[5] = RandomNumber.Next(1, 9);
@@ -119,7 +113,7 @@ namespace Slot_Machine
                         Console.WriteLine($"\nCongratulations, you've won ${5 * bid}!");
                         music.Stop(); kaching.PlaySync(); music.PlayLooping();
                     }
-                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0]< 4)) // NUMBERS 1-3
+                    else if ((num[0] == num[1] && num[1] == num[2] && (num[0] < 4)) // NUMBERS 1-3
                         || (num[3] == num[4] && num[4] == num[5] && (num[3] < 4))
                         || (num[6] == num[7] && num[7] == num[8] && (num[6] < 4))
                         || (num[0] == num[4] && num[4] == num[8] && (num[0] < 4))
@@ -153,6 +147,27 @@ namespace Slot_Machine
                 case 8: return '7';
                 default: return '\0';
             }
+        }
+        public static void Title()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║  Metalkon's Shitty Slot Machine Game!  ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
+        public static string UserCash()
+        {
+            string userResponseCash = string.Empty;
+            Console.Write("Insert Starting Amount ($1000 Limit): ");
+            userResponseCash = Console.ReadLine();
+            return userResponseCash;
+        }
+        public static string UserBid(string userResponseCash)
+        {
+            string userResponseBid = string.Empty;
+            Console.Write($"\nInsert Bid (${userResponseCash} Limit): ");
+            userResponseBid = Console.ReadLine();
+            return userResponseBid;
         }
     }
 }
