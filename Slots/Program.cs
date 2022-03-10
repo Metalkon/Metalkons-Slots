@@ -15,77 +15,47 @@ namespace Slot_Machine
             SoundPlayer kaching = new SoundPlayer(@"Music\Kaching.wav");
             SoundPlayer music = new SoundPlayer(@"Music\Music.wav");
             music.PlayLooping();
-
+            Random RandomNumber = new Random(); 
+            int userCash; int userBid; string response;
             Title();
             Console.WriteLine("How much virtual cash would you like to start the game with?");
-
-            string theInputVariable = string.Empty;
-            string userResponseCash = UserCash();
-            while (!Int32.TryParse(theInputVariable, out _) || Convert.ToInt32(theInputVariable) < 0)
+            Console.Write("Insert Starting Amount ($1000 Limit): ");
+            while (!Int32.TryParse(Console.ReadLine(), out userCash) || userCash > 1000 || userCash < 0)
             {
-                Console.WriteLine("Enter ONLY numbers PLEASE!");
-                UserCash();
+                Console.WriteLine("you fucked up usercash: " + userCash);
             }
-            if (Convert.ToInt32(userResponseCash) > 1000)
+            Console.Write($"What's your starting bid? (${(userCash)} Limit)");
+            while (!Int32.TryParse(Console.ReadLine(), out userBid) || userBid > (userCash))
             {
-                Console.WriteLine("That's too much!");
-                UserCash();
+                Console.WriteLine("you fucked up userbid: " + userBid);
             }
-            // INPUT STARTING BID
-            Console.Write($"Insert Bid (${userResponseCash} Limit): ");
-            string userResponseBid = UserBid(userResponseCash);
-            while (!Int32.TryParse(userResponseBid, out _) || Convert.ToInt32(userResponseBid) < 0)
-            {
-                Console.WriteLine("Enter ONLY numbers PLEASE!");
-                UserBid(userResponseCash);
-            }
-            if (Convert.ToInt32(userResponseBid) > Convert.ToInt32(userResponseBid))
-            {
-                Console.WriteLine("That's too much!");
-                UserBid(userResponseCash);
-            }
-
-
-
-
-
-            // note: gotta figure out how to fix the stuff above.
-            int cash = Convert.ToInt32(userResponseCash);
-            int bid = Convert.ToInt32(userResponseBid);
-
             Title();
             Console.WriteLine($"\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]\n\t  [ 7 ] - [ 7 ] - [ 7 ]");
-            string response;
-            Random RandomNumber = new Random();
-
             for (; ; )
             {
-                if (Convert.ToInt32(cash) < bid)
+                if (userCash < userBid)
                 {
                     Console.WriteLine("You're now broke. GAME OVER");
                     Console.Read();
                     break;
                 }
-                Console.WriteLine($"\nCash Remaining = ${cash} (Current Bid ${bid})");
-                Console.Write("Would you like to spin? (press enter)");
-                response = Console.ReadLine(); System.Threading.Thread.Sleep(100);
-                if (response == "n")
+                Console.WriteLine($"\nCash Remaining = ${userCash} (Current Bid ${userBid})");
+                Console.Write("Would you like to spin? (press enter)"); 
+                response = Console.ReadLine(); response = response.ToLower();
+                if (response == "n" || response == "no")
                 {
                     break;
                 }
-                else
                 {
-                    cash -= bid;
+                    userCash -= userBid;
                     int[] num = new int[9];
                     num[0] = RandomNumber.Next(1, 9); num[1] = RandomNumber.Next(1, 9); num[2] = RandomNumber.Next(1, 9);
                     num[3] = RandomNumber.Next(1, 9); num[4] = RandomNumber.Next(1, 9); num[5] = RandomNumber.Next(1, 9);
                     num[6] = RandomNumber.Next(1, 9); num[7] = RandomNumber.Next(1, 9); num[8] = RandomNumber.Next(1, 9);
-
                     Title();
                     Console.WriteLine($"\t  [ {GetCharacter(num[0])} ] - [ {GetCharacter(num[1])} ] - [ {GetCharacter(num[2])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
                     Console.WriteLine($"\t  [ {GetCharacter(num[3])} ] - [ {GetCharacter(num[4])} ] - [ {GetCharacter(num[5])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
                     Console.WriteLine($"\t  [ {GetCharacter(num[6])} ] - [ {GetCharacter(num[7])} ] - [ {GetCharacter(num[8])} ]"); Console.Beep(); System.Threading.Thread.Sleep(250);
-
                     if ((num[0] == num[1] && num[1] == num[2] && (num[0] == 8)) // SEVENS JACKPOT
                          || (num[3] == num[4] && num[4] == num[5] && (num[3] >= 8))
                          || (num[6] == num[7] && num[7] == num[8] && (num[6] >= 8))
@@ -95,11 +65,10 @@ namespace Slot_Machine
                          || (num[1] == num[4] && num[4] == num[7] && (num[1] >= 8))
                          || (num[2] == num[5] && num[5] == num[8] && (num[2] >= 8)))
                     {
-                        cash += 75 * bid;
-                        Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won {75 * bid}!");
+                        userCash += 100 * userBid;
+                        Console.WriteLine($"\nJACKPOT LUCKY 7's, you've won ${75 * userBid}!");
                         music.Stop(); jackpot.PlaySync(); music.PlayLooping();
                     }
-
                     else if ((num[0] == num[1] && num[1] == num[2] && (num[0] >= 4 && num[0] != 8)) // SPADES/CLUBS/HEARTS/DIAMONDS
                         || (num[3] == num[4] && num[4] == num[5] && (num[3] >= 4 && num[3] != 8))
                         || (num[6] == num[7] && num[7] == num[8] && (num[6] >= 4 && num[6] != 8))
@@ -109,9 +78,10 @@ namespace Slot_Machine
                         || (num[1] == num[4] && num[4] == num[7] && (num[1] >= 4 && num[1] != 8))
                         || (num[2] == num[5] && num[5] == num[8] && (num[2] >= 4 && num[2] != 8)))
                     {
-                        cash += 5 * bid;
-                        Console.WriteLine($"\nCongratulations, you've won ${5 * bid}!");
+                        userCash += 7 * userBid;
+                        Console.WriteLine($"\nCongratulations, you've won ${7 * userBid}!");
                         music.Stop(); kaching.PlaySync(); music.PlayLooping();
+                        System.Threading.Thread.Sleep(250);
                     }
                     else if ((num[0] == num[1] && num[1] == num[2] && (num[0] < 4)) // NUMBERS 1-3
                         || (num[3] == num[4] && num[4] == num[5] && (num[3] < 4))
@@ -122,9 +92,10 @@ namespace Slot_Machine
                         || (num[1] == num[4] && num[4] == num[7] && (num[1] < 4))
                         || (num[2] == num[5] && num[5] == num[8] && (num[2] < 4)))
                     {
-                        cash += 3 * bid;
-                        Console.WriteLine($"\nCongratulations, you've won ${3 * bid}!");
+                        userCash += 5 * userBid;
+                        Console.WriteLine($"\nCongratulations, you've won ${3 * userBid}!");
                         music.Stop(); kaching.PlaySync(); music.PlayLooping();
+                        System.Threading.Thread.Sleep(250);
                     }
                     else
                     {
@@ -155,19 +126,9 @@ namespace Slot_Machine
             Console.WriteLine("║  Metalkon's Shitty Slot Machine Game!  ║");
             Console.WriteLine("╚════════════════════════════════════════╝\n");
         }
-        public static string UserCash()
-        {
-            string userResponseCash = string.Empty;
-            Console.Write("Insert Starting Amount ($1000 Limit): ");
-            userResponseCash = Console.ReadLine();
-            return userResponseCash;
-        }
-        public static string UserBid(string userResponseCash)
-        {
-            string userResponseBid = string.Empty;
-            Console.Write($"\nInsert Bid (${userResponseCash} Limit): ");
-            userResponseBid = Console.ReadLine();
-            return userResponseBid;
-        }
     }
 }
+/*QUOTE FROM REDDIT
+
+Those huge blocks of checks are hard to read through. You could make functions IsSevensJackpot(array) for example. Then your logic reads
+If IsSevensJackpot(array) { // Do stuff for winning sevens jackpot }*/
